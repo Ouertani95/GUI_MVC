@@ -73,8 +73,8 @@ class View(themes.ThemedTk):
         y_offset = ((self.winfo_screenheight() - height) // 2 )
         self.geometry(f"{width}x{height}+{x_offset}+{y_offset}")
     
-    def search_results_window(self,found_persons_list):
-        if len(found_persons_list) == 0:
+    def search_results(self,found_persons_list):
+        if not found_persons_list:
             messagebox.showwarning("Résultat recherche","Aucune personne avec ce nom n'a été trouvée")
         else:
             #Create new search result window
@@ -106,6 +106,12 @@ class View(themes.ThemedTk):
             search_table.pack()
             y_scroll_bar.config(command=search_table.yview)
 
+    def delete_results(self,deleted_elements):
+        messagebox.showinfo("Delete results",deleted_elements)
+        
+    def insert_results(self,insertion_message):
+        messagebox.showinfo("Insertion results",insertion_message)
+
     def refresh_entries(self):
         for entry in self.widgets_entry.values():
             entry.delete(0,"end")
@@ -116,3 +122,11 @@ class View(themes.ThemedTk):
         self.title("Annuaire")
         self._center_window()
         self.mainloop()
+
+class Interface(View):
+    def __init__(self, controller):
+        super().__init__(controller)
+    
+class CLI(View):
+    def __init__(self, controller):
+        super().__init__(controller)
