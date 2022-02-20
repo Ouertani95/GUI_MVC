@@ -7,6 +7,9 @@
 
 __author__ = 'Mohamed Ouertani'
 
+# Standard library imports
+from builtins import input
+# Local application imports
 from gui import Interface
 from cli import CLI
 from model import Ensemble

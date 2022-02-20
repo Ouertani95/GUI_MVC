@@ -8,7 +8,9 @@
 __author__ = 'Mohamed Ouertani'
 
 class View():
+
     """View superclass"""
+
     def __init__(self, controller):
         self.controller = controller
         self.entries = ["Nom", "Prenom", "Telephone", "Adresse", "Ville"]

@@ -7,6 +7,7 @@
 
 __author__ = 'Mohamed Ouertani'
 
+# Standard library imports
 import pickle
 
 class Person:
@@ -69,8 +70,8 @@ class Ensemble:
         if values_to_del:
             for to_del in values_to_del:
                 del self.list_person[to_del]
-                print('Deleted: '+to_del)
-            return f"Deleted : {values_to_del}"
+            deleted_persons = "\n - ".join(values_to_del)
+            return f"Deleted :\n - {deleted_persons}"
         return "No such name was found"
 
     def search_person(self, name):
@@ -84,12 +85,12 @@ class Ensemble:
 
     def save_persons(self):
         """Save existing persons before exiting application"""
-        with open('filename.pickle', 'wb') as handle:
+        with open('yearbook_save.pickle', 'wb') as handle:
             pickle.dump(self.list_person, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
     def load_persons(self):
         """Load existing persons while loading application"""
-        with open('filename.pickle', 'rb') as handle:
+        with open('yearbook_save.pickle', 'rb') as handle:
             list_persons = pickle.load(handle)
             self.list_person = list_persons
 
