@@ -24,9 +24,11 @@ class View():
         """Display search result"""
 
 
-    def delete_result(self,deleted_elements):
+    def delete_result(self,deleted_elements,deletion=False):
         """Display deletion result"""
 
+    def delete_confirmation(self,persons_list):
+        """Gets deletion confirmation before deleting persons"""
 
     def insert_result(self,insertion_message):
         """Display insertion result"""

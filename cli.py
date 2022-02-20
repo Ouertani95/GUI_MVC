@@ -48,9 +48,30 @@ class CLI(cmd2.Cmd,View):
         self.entries_values["Nom"] = str(input("Saisir Nom : "))
         self.controller.command_handle("Effacer")
 
-    def delete_result(self,deleted_elements):
+    def delete_result(self,deleted_elements,deletion=False):
         """Print deletion results"""
-        self.poutput(cmd2.style(deleted_elements, fg=cmd2.Fg.RED))
+        if deletion:
+            self.poutput(cmd2.style(f"The following persons were deleted :\n - {deleted_elements}",
+                        fg=cmd2.Fg.RED))
+        else:
+            self.poutput(cmd2.style(deleted_elements,fg=cmd2.Fg.RED))
+
+    def delete_confirmation(self,persons_list):
+        """Gets deletion confirmation before deleting persons"""
+        persons_to_delete = ""
+        for person in persons_list:
+            persons_to_delete += f"""\n - {person["nom"]} {person["prenom"]}"""
+        response = str(input("Are you sure you want to delete these persons?"
+                            +persons_to_delete+"\n (type y or n ?) : "))
+        while response not in ["y","n"]:
+            response = str(input("Are you sure you want to delete these persons?"
+                                +persons_to_delete+"\n (type y or n ?) : "))
+        if response == "n":
+            self.poutput(cmd2.style("Deletion aborted", fg=cmd2.Fg.RED))
+            response = False
+        else:
+            response = True
+        return response
 
     def do_search(self,args):
         """Get person informations to be searched"""
@@ -67,7 +88,8 @@ class CLI(cmd2.Cmd,View):
             result = "the following persons were found : "
             self.poutput(cmd2.style(result, fg=cmd2.Fg.GREEN))
             for person in found_persons_list:
-                self.poutput(cmd2.style(person, fg=cmd2.Fg.BLUE))
+                person_id = f"""{person["nom"]} {person["prenom"]}"""
+                self.poutput(cmd2.style(person_id, fg=cmd2.Fg.BLUE))
 
     def main(self):
         """Launch the CLI interface"""

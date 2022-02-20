@@ -61,19 +61,38 @@ class Interface(themes.ThemedTk,View):
                 search_table.heading(column_name,text=column_name,anchor=CENTER)
             person_id = 0
             for person in found_persons_list:
-                search_table.insert(parent="",index='end',iid=person_id,text=f"Personne N°: {person_id+1}",
-                value=(person.get_nom(),person.get_prenom(),person.get_telephone(),
-                person.get_adresse(),person.get_ville()))
+                search_table.insert(parent="",index='end',iid=person_id,
+                                    text=f"Personne N°: {person_id+1}",
+                                    value=(person["nom"],person["prenom"],person["telephone"],
+                                    person["adresse"],person["ville"]))
                 person_id += 1
             #Configure scrollbar
             search_table.pack()
             y_scroll_bar.config(command=search_table.yview)
         self._refresh_entries()
 
-    def delete_result(self,deleted_elements):
+    def delete_result(self,deleted_elements,deletion=False):
         """Display deletion result"""
-        messagebox.showinfo("Delete results",deleted_elements)
+        if deletion:
+            messagebox.showinfo("Delete results",
+                                f"The following persons were deleted :\n - {deleted_elements}")
+        else:
+            messagebox.showinfo("Delete results",deleted_elements)
         self._refresh_entries()
+
+    def delete_confirmation(self,persons_list):
+        """Gets deletion confirmation before deleting persons"""
+        persons_to_delete = ""
+        for person in persons_list:
+            persons_to_delete += f"""\n - {person["nom"]} {person["prenom"]}"""
+        response = messagebox.askyesno("Deletion ?",
+                                       "Are you sure you want to delete these persons?"
+                                       +persons_to_delete)
+        if not response:
+            messagebox.showinfo("Deletion abortion","Deletion aborted")
+            self._refresh_entries()
+        return response
+
 
     def insert_result(self,insertion_message):
         """Display insertion result"""

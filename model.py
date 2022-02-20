@@ -58,28 +58,28 @@ class Ensemble:
         self.list_person[f"{prenom} {nom}"] = person
         return f"{prenom} {nom} was added successfully"
 
-    def delete_person(self, person):
+    def delete_person(self, persons_list):
         """Delete existing persons"""
-        nom = person.get_nom()
-        if not nom:
-            return "Please insert a name to delete"
-        values_to_del = []
-        for element in self.list_person.keys():
-            if nom.upper() in element.upper():
-                values_to_del.append(element)
-        if values_to_del:
-            for to_del in values_to_del:
-                del self.list_person[to_del]
-            deleted_persons = "\n - ".join(values_to_del)
-            return f"Deleted :\n - {deleted_persons}"
-        return "No such name was found"
+        names_list = []
+        for person in persons_list:
+            prenom = person["prenom"]
+            nom = person["nom"]
+            person_id = f"{prenom} {nom}"
+            names_list.append(person_id)
+            del self.list_person[person_id]
+        deleted_persons = "\n - ".join(names_list)
+        return f"{deleted_persons}"
 
     def search_person(self, name):
         """Search corresponding persons"""
         names_fetched = []
-        for element in self.list_person.keys():
-            if name.upper() in element.upper():
-                names_fetched.append(self.list_person[element])
+        for person in self.list_person.values():
+            if name.upper() in person.get_nom().upper():
+                names_fetched.append({"nom":person.get_nom(),
+                                      "prenom":person.get_prenom(),
+                                      "telephone":person.get_telephone(),
+                                      "adresse":person.get_adresse(),
+                                      "ville":person.get_ville()})
         return names_fetched
 
 

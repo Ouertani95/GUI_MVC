@@ -59,9 +59,10 @@ class Controller():
                 message = "No persons to delete with this name"
                 self.view.delete_result(message)
             else:
-                person_to_delete = self._create_person()
-                delete_return = self.model.delete_person(person_to_delete)
-                self.view.delete_result(delete_return)
+                confirmation = self.view.delete_confirmation(search_return)
+                if confirmation:
+                    delete_return = self.model.delete_person(search_return)
+                    self.view.delete_result(delete_return,True)
 
 
     def insert(self):
