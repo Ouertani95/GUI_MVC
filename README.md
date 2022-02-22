@@ -51,9 +51,12 @@ At the end of the process a result window will be displayed.
 If you choose a CLI by typing 2 you will get an interactive interface inside the terminal.
 The following commands can be used : 
 - help -v : get help about all the available functions for the application
+- quit : exit the application
 - insert : initiates the insertion process by prompting for input of information
 - delete : initiates the deletion process by prompting for name input
 - search : initiates the search process by prompting for name input
+
+==> After typing the desired function name press enter and you will be prompted to give the appropriate input
 ==> At the end of each chosen function a message will be displayed with the results.
 
 ## Authors :
