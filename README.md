@@ -13,7 +13,7 @@ This package contains 5 modules for a yearbook application based on the MVC mode
 
 ## Features :
 
-**Main Feature** :
+**Main Features** :
 - *Search* a person inside the yearbook
 - *Insert* a person to the yearbook
 - *Delete* a person from the yearbook
@@ -57,6 +57,7 @@ The following commands can be used :
 - search : initiates the search process by prompting for name input
 
 ==> After typing the desired function name press enter and you will be prompted to give the appropriate input
+
 ==> At the end of each chosen function a message will be displayed with the results.
 
 ## Authors :
