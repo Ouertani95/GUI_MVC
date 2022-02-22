@@ -54,10 +54,10 @@ class Interface(themes.ThemedTk,View):
             #Create and fill search result table
             search_table = ttk.Treeview(search_frame,yscrollcommand=y_scroll_bar.set)
             search_table["columns"] = ("Nom", "Prenom", "Telephone", "Adresse", "Ville")
-            search_table.column("#0",anchor=CENTER,width=120,minwidth=120)
+            search_table.column("#0",anchor=CENTER,minwidth=80,width=120)#
             search_table.heading("#0",text="",anchor=CENTER)
             for column_name in search_table["columns"]:
-                search_table.column(column_name,anchor=CENTER,width=120,minwidth=120)
+                search_table.column(column_name,anchor=CENTER,minwidth=80,width=120)#
                 search_table.heading(column_name,text=column_name,anchor=CENTER)
             person_id = 0
             for person in found_persons_list:
@@ -74,10 +74,10 @@ class Interface(themes.ThemedTk,View):
     def delete_result(self,deleted_elements,deletion=False):
         """Display deletion result"""
         if deletion:
-            messagebox.showinfo("Delete results",
-                                f"The following persons were deleted :\n - {deleted_elements}")
+            message = "Les personnes suivantes ont été supprimées :\n - "
+            messagebox.showinfo("Résultat délétion",message+deleted_elements)
         else:
-            messagebox.showinfo("Delete results",deleted_elements)
+            messagebox.showinfo("Résultat délétion",deleted_elements)
         self._refresh_entries()
 
     def delete_confirmation(self,persons_list):
@@ -85,18 +85,18 @@ class Interface(themes.ThemedTk,View):
         persons_to_delete = ""
         for person in persons_list:
             persons_to_delete += f"""\n - {person["nom"]} {person["prenom"]}"""
-        response = messagebox.askyesno("Deletion ?",
-                                       "Are you sure you want to delete these persons?"
+        response = messagebox.askyesno("Délétion",
+                                       "Etes vous sûr de vouloir supprimer ces personnes ?"
                                        +persons_to_delete)
         if not response:
-            messagebox.showinfo("Deletion abortion","Deletion aborted")
+            messagebox.showinfo("Annulation de la délétion","Délétion abandonnée")
             self._refresh_entries()
         return response
 
 
     def insert_result(self,insertion_message):
         """Display insertion result"""
-        messagebox.showinfo("Insertion results",insertion_message)
+        messagebox.showinfo("Résultat insertion",insertion_message)
         self._refresh_entries()
 
     def main(self):

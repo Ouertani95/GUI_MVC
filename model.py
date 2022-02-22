@@ -55,8 +55,11 @@ class Ensemble:
         """Insert new person"""
         prenom = person.get_prenom()
         nom = person.get_nom()
-        self.list_person[f"{prenom} {nom}"] = person
-        return f"{prenom} {nom} was added successfully"
+        person_id = f"{prenom} {nom}"
+        if person_id not in self.list_person.keys():
+            self.list_person[person_id] = person
+            return f"{person_id} a été ajouté avec succés"
+        return f"{person_id} existe déjà dans l'annuaire"
 
     def delete_person(self, persons_list):
         """Delete existing persons"""

@@ -22,19 +22,19 @@ class Controller():
     def __init__(self):
         which_view = self.view_choice()
         if which_view == "1" :
-            print("You chose a GUI")
+            print("Vous avez choisi un GUI")
             self.view = Interface(self)
         elif which_view == "2":
-            print("You chose a CLI")
+            print("Vous avez choisi un CLI")
             self.view = CLI(self)
         self.model = Ensemble()
 
     @staticmethod
     def view_choice():
         """Choose between different views"""
-        which_view = input("Type 1 for a GUI or 2 for a CLI : ")
+        which_view = input("Tapez 1 pour un GUI ou 2 pour un CLI : ")
         while which_view not in ["1","2"]:
-            which_view = input("Type 1 for a GUI or 2 for a CLI : ")
+            which_view = input("Tapez 1 pour un GUI ou 2 pour un CLI : ")
         return which_view
 
     def start_view(self):
@@ -51,12 +51,12 @@ class Controller():
         """Control the deletion process between model and view"""
         family_name = self.view.get_value("Nom")
         if not family_name:
-            message = "Please insert a family name to delete"
+            message = "Veuillez insérer le nom d'une personne à supprimer"
             self.view.delete_result(message)
         else:
             search_return = self.model.search_person(family_name)
             if not search_return:
-                message = "No persons to delete with this name"
+                message = "Pas de personnes à supprimer avec ce nom"
                 self.view.delete_result(message)
             else:
                 confirmation = self.view.delete_confirmation(search_return)
@@ -70,7 +70,7 @@ class Controller():
         first_name = self.view.get_value("Prenom")
         family_name = self.view.get_value("Nom")
         if not first_name or not family_name:
-            message = "Please insert at least first name and family name"
+            message = "Veuillez insérer au moins un nom et un prénom"
             self.view.insert_result(message)
         else:
             person_to_add = self._create_person()

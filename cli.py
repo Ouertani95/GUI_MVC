@@ -11,6 +11,7 @@ __author__ = 'Mohamed Ouertani'
 from builtins import input
 # Third party imports
 import cmd2
+from prettytable import PrettyTable
 # Local application imports
 from view_obj import View
 
@@ -51,7 +52,8 @@ class CLI(cmd2.Cmd,View):
     def delete_result(self,deleted_elements,deletion=False):
         """Print deletion results"""
         if deletion:
-            self.poutput(cmd2.style(f"The following persons were deleted :\n - {deleted_elements}",
+            message = "Les personnes suivantes ont été supprimées :\n - "
+            self.poutput(cmd2.style(message+deleted_elements,
                         fg=cmd2.Fg.RED))
         else:
             self.poutput(cmd2.style(deleted_elements,fg=cmd2.Fg.RED))
@@ -61,13 +63,13 @@ class CLI(cmd2.Cmd,View):
         persons_to_delete = ""
         for person in persons_list:
             persons_to_delete += f"""\n - {person["nom"]} {person["prenom"]}"""
-        response = str(input("Are you sure you want to delete these persons?"
-                            +persons_to_delete+"\n (type y or n ?) : "))
+        response = str(input("Etes vous sûr de vouloir supprimer ces personnes ?"
+                            +persons_to_delete+"\n (tapez y ou n ?) : "))
         while response not in ["y","n"]:
-            response = str(input("Are you sure you want to delete these persons?"
-                                +persons_to_delete+"\n (type y or n ?) : "))
+            response = str(input("Etes vous sûr de vouloir supprimer ces personnes ?"
+                                +persons_to_delete+"\n (tapez y ou n ?) : "))
         if response == "n":
-            self.poutput(cmd2.style("Deletion aborted", fg=cmd2.Fg.RED))
+            self.poutput(cmd2.style("Délétion abandonnée", fg=cmd2.Fg.RED))
             response = False
         else:
             response = True
@@ -82,14 +84,16 @@ class CLI(cmd2.Cmd,View):
     def search_result(self, found_persons_list):
         """Print search results"""
         if not found_persons_list:
-            result = "No persons were found"
+            result = "Aucune personne avec ce nom n'a été trouvée"
             self.poutput(cmd2.style(result, fg=cmd2.Fg.RED))
         else:
-            result = "the following persons were found : "
+            result = "Les personnes suivantes ont été trouvées : "
             self.poutput(cmd2.style(result, fg=cmd2.Fg.GREEN))
+            header = list(found_persons_list[0].keys())
+            table = PrettyTable(header)
             for person in found_persons_list:
-                person_id = f"""{person["nom"]} {person["prenom"]}"""
-                self.poutput(cmd2.style(person_id, fg=cmd2.Fg.BLUE))
+                table.add_row(person.values())
+            print(table)
 
     def main(self):
         """Launch the CLI interface"""
